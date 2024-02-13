@@ -1,0 +1,35 @@
+header {
+    background-color: #fff;
+    border-bottom: #cacaca9d solid 1px;
+}
+
+.tituloPrincipal {
+    text-align: center;
+    margin: 3rem;
+}
+
+.side-menu {
+    display: flex;
+    list-style: none;
+    justify-content: end;
+    margin-right: 4rem;
+
+}
+
+.a-menu {
+    text-decoration: none;
+    color: #252525;
+    font-weight: bold;
+    margin: auto 1rem;
+    transition: text-decoration 150ms ease-in-out;
+}
+
+.a-menu:hover {
+    text-decoration: underline;
+}
+
+.headers {
+    display: flex;
+    justify-content: space-between;
+}
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/menu.css">
+    <title>Register User</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="side-menu">
+                <li class="li-menu"><a class="a-menu" href="./index.html">Login</a></li>
+                <li class="li-menu"><a class="a-menu" href="./mocks.html">Manage My Mocks</a></li>
+                <li class="li-menu"><a class="a-menu" href="./home.html">New Mock</a></li>
+            </ul>
+        </nav>
+        <h1 class="tituloPrincipal">Register the new User</h1>
+    </header>
+    <div class="container">
+        <form >
+            <div class="content-charset-container">
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="headers">Nombre</p>
+                        <p class="required-card">required</p>
+                    </div>
+                    <input id="name" class="inputText" type="text" placeholder="Ej: Juan" autocomplete="off">
+                </div>
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="headers">Apellido</p>
+                        <p class="required-card">required</p>
+                    </div>
+                    <input class="inputText" id="lastName" type="text" placeholder="Ej: Perez" autocomplete="off">
+                </div>
+            </div>
+            <div class="content-charset-container">
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="headers">Usuario</p>
+                        <p class="required-card">required</p>
+                    </div>
+                    <input class="inputText" id="userName" type="text" placeholder="Ej: juanPrz05" autocomplete="off">
+                </div>
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="headers">Contraseña</p>
+                        <p class="required-card">required</p>
+                    </div>
+                    <input class="inputText" id="password" type="password" autocomplete="off">
+                </div>
+            </div>
+            <button id="btnRegistrar" style="margin-top: 1rem; font-weight: bold;" class="btn-send">Registrar</button>
+        </form>
+    </div>
+    <script type="module" src="./js/registerUser.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/menu.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="side-menu">
+                <li class="li-menu"><a class="a-menu" href="./index.html">Login</a></li>
+                <li class="li-menu"><a class="a-menu" href="./mocks.html">Manage My Mocks</a></li>
+                <li class="li-menu"><a class="a-menu" href="./index.html">New Mock</a></li>
+            </ul>
+        </nav>
+        <h1 class="tituloPrincipal">Desing your mock</h1>
+    </header>
+    <section class="container">
+        <form class="formMock" id="requestForm">
+            <div class="content-charset-container">
+                <div class="card-container">
+                    <div class="headers">
+                        <p class="label">Selecciona un HTTP Status:</p>
+                        <p class="required-card" >Required</p>
+                    </div>
+                    <select class="custom-select" id="status">
+                        <option value="200">200 - OK</option>
+                        <option value="201">201 - Created</option>
+                        <option value="204">204 - No Content</option>
+                        <option value="400">400 - Bad Request</option>
+                        <option value="401">401 - Unauthorized</option>
+                        <option value="403">403 - Forbidden</option>
+                        <option value="404">404 - Not Found</option>
+                        <option value="500">500 - Internal Server Error</option>
+                        <option value="502">502 - Bad Gateway</option>
+                        <option value="503">503 - Service Unavailable</option>
+                    </select>
+                    <p class="description">The HTTP Code of the HTTP response you'll receive.</p>
+                </div>
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="method">Método:</p>
+                        <p class="required-card">Required</p>
+                    </div>
+                    <select id="method" name="method">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="content-charset-container">
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="contentType">Response Content Type</p>
+                        <p class="required-card">Required</p> 
+                    </div>
+                    <select id="contentType">
+                        <option value="application/json">application/json</option>
+                        <option value="text/html">text/html</option>
+                        <option value="text/plain">text/plain</option>
+                        <option value="application/xml">application/xml</option>
+                        <option value="application/pdf">application/pdf</option>
+                        <option value="image/jpeg">image/jpeg</option>
+                        <option value="image/png">image/png</option>
+                    </select>
+                    <p class="description">
+                        The Content-Type header that will be sent with the response.
+                    </p>
+                </div>
+                <div class="card-container">
+                   <div class="headers">
+                    <p for="charset">Charset</p>
+                    <p class="required-card" >Required</p>
+                   </div>
+                    <select id="charset">
+                        <option value="UTF-8">UTF-8</option>
+                        <option value="ISO-8859-1">ISO-8859-1</option>
+                        <option value="UTF-16">UTF-16</option>
+                    </select>
+                    <p class="description">
+                        The Charset used to encode/decode your payload.
+                    </p>
+                </div>
+            </div>
+            <div class="card-container-txt">
+                <div class="headers">
+                    <p for="headers">HTTP Headers (JSON):</p>
+                    <p class="required-card-txt">optional</p>
+                </div>
+                <textarea id="headers" name="headers" rows="4"
+                    placeholder="{
+    'headerCustom':'ejemploHeaderCustom'
+}"></textarea>
+            </div>
+            <div>
+                <p for="body">Cuerpo (JSON):</p>
+                <textarea id="body" name="body" rows="12" placeholder="{
+    &quot;identity&quot;: {
+    &quot;id&quot;: &quot;b06cd03f-75d0-413a-b94b-35e155444d70&quot;,
+    &quot;login&quot;: &quot;John Doe&quot;
+    },
+        &quot;permissions&quot;: {
+        &quot;roles&quot;: [
+        &quot;moderator&quot;
+        ]
+    }
+}"></textarea>
+    
+            </div>
+            <div class="content-charset-container">
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="headers">URL</p>
+                        <p class="required-card">required</p>
+                    </div>
+                    <input class="inputText" id="url" type="text" placeholder="www.ejemplo.com" autocomplete="off">
+                </div>
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="headers">Nombre del end point</p>
+                        <p class="required-card">required</p>
+                    </div>
+                    <input class="inputText" id="nombre" type="text" placeholder="ejemplo" autocomplete="off">
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="headers">
+                    <p for="headers">Descripcion del end point</p>
+                    <p class="required-card-txt">optional</p>
+                </div>
+                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+            </div>
+            <div class="content-charset-container">
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="contentType">Expiracion</p>
+                        <p class="required-card">Required</p> 
+                    </div>
+                    <select id="timeExpire">
+                        <option value="1 año">1 año</option>
+                        <option value="1 mes">1 mes</option>
+                        <option value="1 semana">1 semana</option>
+                        <option value="1 dia">1 dia</option>
+                        <option value="1 hora">1 hora</option>
+                    </select>
+                    <p class="description">
+                        Indique el tiempo de expiracion del end-point
+                    </p>
+                </div>
+                <div class="card-container">
+                    <div class="headers">
+                        <p for="contentType">Demora</p>
+                        <p class="required-card-txt">optional</p> 
+                    </div>
+                    <input id="timeDemora" class="inputText" type="number">
+                    <p class="description">
+                        Indique el tiempo de demora que tardará el end point en responder con la data.
+                    </p>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="headers">
+                    <p for="contentType">JWT</p>
+                    <p class="required-card-txt">optional</p> 
+                </div>
+                <input id="cbxJWT" type="checkbox">
+                <p class="description">
+                    Indique el tiempo de demora que tardará el end point en responder con la data.
+                </p>
+            </div>
+            <button id="btnSend" class="btn-send" type="submit">Enviar Petición</button>
+        </form>
+    </section>
+    <footer>
+
+    </footer>
+    <script type="module" src="./js/home.js"></script>
+</body>
+</html>

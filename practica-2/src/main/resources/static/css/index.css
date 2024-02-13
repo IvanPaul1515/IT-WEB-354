@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #FAFAFA;
+}
+
+
+.container {
+    width: 85%;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: white;
+    border: #cacaca9d solid 1px;
+    border-radius: 5px;
+}
+
+.label {
+    font-size: medium;
+}
+
+.required-card {
+    font-size: x-small;
+    background-color: #17A2B8;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    height: 15px;
+    text-transform: uppercase;
+}
+.required-card-txt {
+    font-size: x-small;
+    background-color: #999C9F;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    height: 15px;
+    text-transform: uppercase;
+}
+
+.card-container {
+    width: 45%;
+}
+.card-container-txt {
+    width: 100%;
+}
+
+.description {
+    font-size: x-small;
+    color: #2374BE;
+}
+
+.content-charset-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Estilo personalizado para el select */
+select {
+    appearance: none; /* Oculta el estilo nativo */
+    padding: 10px 30px 10px 10px;
+    margin-top: 0;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    background-image: url("../img/flechita.png"); /* Agrega la flecha hacia abajo como fondo */
+    background-repeat: no-repeat;
+    background-position: right center; /* Alinea la flecha a la derecha */
+    background-size: 16px;
+}
+
+/* Cambia el aspecto del icono de flecha */
+select::after {
+    content: "\25BC"; /* Código de la flecha hacia abajo */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Evita que el icono sea seleccionable */
+}
+
+/* Estilo personalizado para el textarea */
+textarea {
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.btn-send {
+    
+    background: #17A2B8;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 40%;
+    margin-left: 30%;
+    transition: background 150ms ease-in-out;
+
+
+}
+
+.btn-send:hover {
+    background: #17a3b8d2;
+}
+.inputText {
+    appearance: none; /* Oculta el estilo nativo */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 0;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}

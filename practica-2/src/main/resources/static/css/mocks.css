@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #FAFAFA;
+}
+
+.container {
+    width: 85%;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: white;
+    border: #cacaca9d solid 1px;
+    border-radius: 5px;
+    overflow-x: auto; /* Agregamos scroll horizontal en el contenedor */
+}
+
+/* Estilo para la tabla */
+table {
+    border-collapse: collapse;
+    width: 100%; /* Cambiamos el ancho a 100% para que ocupe todo el contenedor */
+    /*margin: 20px auto;  Quitar el margen aquí */
+}
+
+/* Estilo para las celdas del encabezado */
+th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Estilo para las filas impares */
+tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para las celdas de datos */
+td {
+    padding: 12px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos para los estados */
+td.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td.created {
+    background-color: #007bff;
+    color: white;
+}
+
+td.warning {
+    background-color: #FFC107;
+    color: #333;
+}
+
+.td-action {
+    /* display: flex;
+    justify-content: space-between;*/
+    padding: 1rem;
+}
+
+.detalles {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    margin: auto;
+}
+
+.texto-detalle {
+    font-size: x-small;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    height: 15px;
+    text-transform: uppercase;
+    margin: 0.5rem;
+    background-color: #007bff;
+}
+
+.body-response {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
