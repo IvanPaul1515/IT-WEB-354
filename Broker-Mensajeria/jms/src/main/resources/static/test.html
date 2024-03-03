@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Temperatura y Humedad en Tiempo Real</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 150px;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chart-container {
+            width: 45%;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Gráficos de Temperatura y Humedad en Tiempo Real</h1>
+<div class="container">
+    <div class="chart-container">
+        <canvas id="temperatureChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="humidityChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script>
+    // Inicializar los gráficos de temperatura y humedad
+    var temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
+    var temperatureChart = new Chart(temperatureCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Temperatura Sensor 1 (°C)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false,
+                data: []
+            }, {
+                label: 'Temperatura Sensor 2 (°C)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 2,
+                fill: false,
+                data: []
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var humidityCtx = document.getElementById('humidityChart').getContext('2d');
+    var humidityChart = new Chart(humidityCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Humedad Sensor 1 (%)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false,
+                data: []
+            }, {
+                label: 'Humedad Sensor 2 (%)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+                data: []
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Conexión al servidor WebSocket
+    const socket = new WebSocket('ws://localhost:8080/sensor-data');
+    socket.onopen = function(event) {
+        console.log("WebSocket connected.");
+    };
+
+    // Procesar los datos recibidos
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        const time = new Date().toLocaleTimeString();
+
+        // Actualizar los datos del gráfico de temperatura
+        if (data.sensorId === 1) {
+            temperatureChart.data.labels.push(time);
+            temperatureChart.data.datasets[0].data.push(data.temperature);
+        } else if (data.sensorId === 2) {
+            temperatureChart.data.datasets[1].data.push(data.temperature);
+        }
+
+        // Actualizar los datos del gráfico de humedad
+        if (data.sensorId === 3) {
+            humidityChart.data.labels.push(time);
+            humidityChart.data.datasets[0].data.push(data.humidity);
+        } else if (data.sensorId === 4) {
+            humidityChart.data.datasets[1].data.push(data.humidity);
+        }
+
+        // Actualizar los gráficos
+        temperatureChart.update();
+        humidityChart.update();
+    };
+</script>
+</body>
+</html>

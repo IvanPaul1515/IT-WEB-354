@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Temperatura y Humedad en Tiempo Real</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chart-container {
+            width: 45%;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative; /* Para posicionar el canvas */
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: calc(100% - 50px); /* Ajustar la altura del canvas */
+            border-radius: 10px;
+            position: absolute; /* Para posicionar el canvas */
+            bottom: 20px; /* Distancia del canvas desde el borde inferior */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="chart-container">
+        <h1>Gráfico de Temperatura</h1>
+        <canvas id="mainCanvas"></canvas>
+    </div>
+    <div class="chart-container">
+        <h1>Gráfico de Humedad</h1>
+        <canvas id="humidityCanvas"></canvas>
+    </div>
+</div>
+
+<script>
+    const charts = {};
+
+    const stompClient = new StompJs.Client({
+        brokerURL: 'ws://localhost:8080/gs-guide-websocket'
+    });
+
+    stompClient.onConnect = (frame) => {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/greetings', (greeting) => {
+            showGreeting(greeting);
+        });
+    };
+
+    function connect() {
+        stompClient.activate();
+    }
+
+    const canvasId = 'mainCanvas'; // Identificador para el canvas principal
+
+    createCanvas();
+
+    function showGreeting(message) {
+        const binaryData = new Uint8Array(message._binaryBody);
+        const textMessage = new TextDecoder('utf-8').decode(binaryData);
+        const jsonObject = JSON.parse(textMessage);
+
+        if (canvasExists(canvasId)) {
+            updateCanvas(jsonObject);
+            updateCanvas2(jsonObject);
+        } else {
+            updateCanvas(jsonObject);
+            updateCanvas2(jsonObject);
+        }
+    }
+
+    function esperar(ms) {
+        return new Promise(resolve => {
+            setTimeout(resolve, ms);
+        });
+    }
+
+    function updateCanvas(jsonObject) {
+        const mainCanvas = charts[canvasId];
+        const timestamp = new Date().toLocaleTimeString();
+
+        if (mainCanvas) {
+            let datasetToUpdate = mainCanvas.data.datasets.find(dataset => dataset.label === `Temperatura Dispositivo ${jsonObject.IdDispositivo}`);
+
+            if (!datasetToUpdate) {
+                let backgroundColor, borderColor;
+
+                if (jsonObject.IdDispositivo === 1) {
+                    backgroundColor = 'rgba(255, 99, 132, 0.2)';
+                    borderColor = 'rgba(255, 99, 132, 1)';
+                } else if (jsonObject.IdDispositivo === 2) {
+                    backgroundColor = 'rgba(54, 162, 235, 0.2)';
+                    borderColor = 'rgba(54, 162, 235, 1)';
+                } else {
+                    backgroundColor = 'rgba(75, 192, 192, 0.2)';
+                    borderColor = 'rgba(75, 192, 192, 1)';
+                }
+
+                datasetToUpdate = {
+                    label: `Temperatura Dispositivo ${jsonObject.IdDispositivo}`,
+                    data: [],
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 2
+                };
+                mainCanvas.data.datasets.push(datasetToUpdate);
+            }
+
+            if (datasetToUpdate.data.length >= 6) {
+                datasetToUpdate.data.shift(); // Eliminar el primer dato si hay 6 o más
+            }
+
+            datasetToUpdate.data.push({x: timestamp, y: jsonObject.temperatura});
+            mainCanvas.update();
+        } else {
+            console.error("El canvas principal no está inicializado correctamente.");
+        }
+    }
+
+    function updateCanvas2(jsonObject) {
+        const canvasId2 = 'humidityCanvas';
+        const humidityCanvas = charts[canvasId2];
+        const timestamp = new Date().toLocaleTimeString();
+
+        if (humidityCanvas) {
+            let datasetToUpdate = humidityCanvas.data.datasets.find(dataset => dataset.label === `Humedad Dispositivo ${jsonObject.IdDispositivo}`);
+
+            if (!datasetToUpdate) {
+                let backgroundColor, borderColor;
+
+                if (jsonObject.IdDispositivo === 1) {
+                    backgroundColor = 'rgba(255, 99, 132, 0.2)';
+                    borderColor = 'rgba(255, 99, 132, 1)';
+                } else if (jsonObject.IdDispositivo === 2) {
+                    backgroundColor = 'rgba(54, 162, 235, 0.2)';
+                    borderColor = 'rgba(54, 162, 235, 1)';
+                } else {
+                    backgroundColor = 'rgba(75, 192, 192, 0.2)';
+                    borderColor = 'rgba(75, 192, 192, 1)';
+                }
+
+                datasetToUpdate = {
+                    label: `Humedad Dispositivo ${jsonObject.IdDispositivo}`,
+                    data: [],
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 2
+                };
+                humidityCanvas.data.datasets.push(datasetToUpdate);
+            }
+
+            if (datasetToUpdate.data.length >= 6) {
+                datasetToUpdate.data.shift(); // Eliminar el primer dato si hay 6 o más
+            }
+
+            datasetToUpdate.data.push({x: timestamp, y: jsonObject.humedad});
+            humidityCanvas.update();
+        } else {
+            console.error("El canvas de humedad no está inicializado correctamente.");
+        }
+    }
+
+    function createCanvas() {
+        const canvasId = 'mainCanvas';
+        const humidityCanvasId = 'humidityCanvas';
+
+        let mainCanvas = document.createElement("canvas");
+        mainCanvas.id = canvasId;
+        mainCanvas.style.width = '100%';
+        mainCanvas.style.height = 'calc(100% - 50px)'; // Ajustar la altura del canvas
+        mainCanvas.style.borderRadius = '10px';
+        mainCanvas.style.position = 'absolute'; // Para posicionar el canvas
+        mainCanvas.style.bottom = '20px'; // Distancia del canvas desde el borde inferior
+        document.querySelector('.chart-container:nth-child(1)').appendChild(mainCanvas);
+
+        let ctx = mainCanvas.getContext('2d');
+        charts[canvasId] = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        let humidityCanvas = document.createElement("canvas");
+        humidityCanvas.id = humidityCanvasId;
+        humidityCanvas.style.width = '100%';
+        humidityCanvas.style.height = 'calc(100% - 50px)'; // Ajustar la altura del canvas
+        humidityCanvas.style.borderRadius = '10px';
+        humidityCanvas.style.position = 'absolute'; // Para posicionar el canvas
+        humidityCanvas.style.bottom = '20px'; // Distancia del canvas desde el borde inferior
+        document.querySelector('.chart-container:nth-child(2)').appendChild(humidityCanvas);
+
+        let humidityCtx = humidityCanvas.getContext('2d');
+        charts[humidityCanvasId] = new Chart(humidityCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: []
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function canvasExists(nombre) {
+        const canvas = document.getElementById(nombre);
+        return !!canvas;
+    }
+
+    $(function () {
+        connect();
+    });
+</script>
+</html>

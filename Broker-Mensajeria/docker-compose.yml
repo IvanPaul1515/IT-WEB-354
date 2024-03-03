@@ -1,0 +1,47 @@
+services:
+
+  activemq:
+    image:
+      apache/activemq-classic
+    ports:
+      - 1883:1883
+      - 5672:5672
+      - 61613:61613
+      - 61614:61614
+      - 61616:61616
+      - 8161:8161
+    networks:
+      - red-receptor
+
+  jms:
+    image:
+      ipmx0001/jms:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - activemq
+    networks:
+      - red-receptor
+
+  sender01:
+    image:
+      ipmx0001/sender01:latest
+    ports:
+      - 8081:8081
+    depends_on:
+      - activemq
+    networks:
+      - red-receptor
+
+  sender02:
+    image:
+      ipmx0001/sender02:latest
+    ports:
+      - 8082:8082
+    depends_on:
+      - activemq
+    networks:
+      - red-receptor
+
+networks:
+  red-receptor:
