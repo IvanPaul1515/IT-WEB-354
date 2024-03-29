@@ -1,0 +1,102 @@
+/* TuArchivoDeEstilos.css */
+
+/* Animación de subrayado */
+.underline-animation {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 100%; /* Cambiar de left a right */
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation:hover::before {
+    right: 0; /* Cambiar de left a right */
+    width: 100%;
+  }
+
+
+  /*--------------------------------------------------------------*/
+
+
+  .underline-animation-red {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation-red::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 100%; /* Cambiar de left a right */
+    width: 0;
+    height: 2px;
+    background-color: red;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation-red:hover::before {
+    right: 0; /* Cambiar de left a right */
+    width: 100%;
+  }
+
+  /*--------------------------------------------------------------*/
+
+
+  .underline-animation-blue {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation-blue::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 100%; /* Cambiar de left a right */
+    width: 0;
+    height: 2px;
+    background-color: blue;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation-blue:hover::before {
+    right: 0; /* Cambiar de left a right */
+    width: 100%;
+  }
+
+
+  /*--------------------------------------------------------------*/
+
+
+  .underline-animation-green {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation-green::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 100%; /* Cambiar de left a right */
+    width: 0;
+    height: 2px;
+    background-color: green;
+    transition: all 0.3s ease;
+  }
+  
+  .underline-animation-green:hover::before {
+    right: 0; /* Cambiar de left a right */
+    width: 100%;
+  }
+
+#imgLogo {
+    filter: brightness(0) invert(1);
+    width: 4rem;
+  }

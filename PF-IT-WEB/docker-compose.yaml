@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: oscarfonts/h2
+    ports:
+      - "9093:9093"
+    volumes:
+      - h2-data:/h2-data
+    environment:
+      H2_OPTIONS: "-tcp -tcpAllowOthers -tcpPort 9093 -ifNotExists"
+    networks:
+      - red-mocky
+
+  backend:
+    image: ipmx0001/backend:latest
+    container_name: app2
+    ports:
+      - "${APP_PORT:-8081}:8081"
+    environment:
+      DB_HOST: db
+      DB_PORT: 9092
+      DB_NAME: test
+      DB_USERNAME: "sa"
+      DB_PASSWORD: ""
+      PORT: ${APP_PORT}
+    networks:
+      - red-mocky
+    depends_on:
+      - db
+
+  frontend:
+    image: ipmx0001/frontend:latest
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: "http://backend:8080"  # Aquí se establece la URL de la API
+      REACT_APP_ID_NEGOCIO: "AVjyXgT7NpmNKQSxp9BJF-hGvxRQgBNEV7vmLvjHx9GEBchCXUussEi9NOBTMGvyao-FwhWyDc5NWCD3"  # Aquí se establece el ID del negocio
+    networks:
+      - red-mocky
+
+networks:
+  red-mocky:
+
+volumes:
+  h2-data:
